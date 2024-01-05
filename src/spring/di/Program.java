@@ -23,7 +23,7 @@ public class Program {
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring/di/setting.xml");
 		
-		Exam exam = context.getBean(Exam.class);
+		//Exam exam = context.getBean("exam", Exam.class);
 		/* System.out.println(exam.toString()); */
 		ExamConsole console = context.getBean(ExamConsole.class);
 		console.print();
@@ -35,5 +35,4 @@ public class Program {
 		 * for(Exam e : exams) System.out.println(e);
 		 */
 	}
-
 }
