@@ -10,6 +10,7 @@ import spring.di.entity.Exam;
 public class InlineExamConsole implements ExamConsole {
 
 	@Autowired(required = false)
+	@Qualifier("exam")
 	private Exam exam;
 
 	public InlineExamConsole() {
