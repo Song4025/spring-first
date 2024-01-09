@@ -13,7 +13,46 @@
 		http://www.springframework.org/schema/util/spring-util-4.3.xsd"
 		>
 
-	<bean id="target" class="spring.aop.entity.NewlecExam" p:kor="101" p:eng="2" p:math="3" p:com="2" />
+	<!-- <bean id="classicPointCut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+		<property name="mappedName" value="total" />
+	</bean>
+	
+	<bean id="classicBeforeAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="logBeforeAdvice"></property>
+		<property name="pointcut" ref="classicPointCut"></property>
+	</bean> 
+	
+	<bean id="classicAroundAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="logAroundAdvice"></property>
+		<property name="pointcut" ref="classicPointCut"></property>
+	</bean>
+	-->
+	
+	<!-- <bean id="classicBeforeAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="advice" ref="logBeforeAdvice"></property>
+		<property name="mappedNames">
+			<list>
+				<value>total</value>
+				<value>avg</value>
+			</list>
+		</property>
+	</bean> -->
+	
+	<bean id="classicBeforeAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<property name="advice" ref="logBeforeAdvice"></property>
+		<property name="patterns">
+			<list>
+				<value>.*to.*</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="classicAroundAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="advice" ref="logAroundAdvice"></property>
+		<property name="mappedName" value="total"></property>
+	</bean>
+
+	<bean id="target" class="spring.aop.entity.NewlecExam" p:kor="1" p:eng="2" p:math="3" p:com="2" />
 	<bean id="logAroundAdvice" class="spring.aop.advice.LogAroundAdvice" />
 	<bean id="logBeforeAdvice" class="spring.aop.advice.LogBeforeAdvice" />
 	<bean id="logAfterReturningAdvice" class="spring.aop.advice.LogAfterReturningAdvice" />
@@ -22,8 +61,10 @@
 		<property name="target" ref="target"></property>
 		<property name="interceptorNames">
 			<list>
-				<value>logAroundAdvice</value>
-				<value>logBeforeAdvice</value>
+				<!-- <value>logAroundAdvice</value> -->
+				<value>classicAroundAdvisor</value>
+				<!-- <value>logBeforeAdvice</value> -->
+				<value>classicBeforeAdvisor</value>
 				<value>logAfterReturningAdvice</value>
 				<value>logAfterThrowingAdvice</value>
 			</list>
